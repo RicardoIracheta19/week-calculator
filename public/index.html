@@ -4,7 +4,7 @@
   <title>ABB Week Calculator</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link rel="stylesheet" href="Bootstrap-4.0/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
@@ -16,12 +16,88 @@
         <h1 class="display-4">Week Calculator</h1>
         <p class="lead">This is a simple hero tool, to simplify and unify the process to calculate dates counting weeks.</p>
         <hr class="my-4">
-        <p>It was developed by Ricardo Iracheta for my ouwn use as nobody seems to want to let me code anymore.</p>
+        <div class="row">
+            <div class="col-sm-4">
+                <label for="start">Start Date:</label>
+                <input type="date" class="form-control" id="start">
+            </div>
+            <div class="col-sm-4">
+                <label for="end">End Date:</label>
+                <input type="date" class="form-control" id="end">
+            </div>
+            <div class="col-sm-4">
+                <label for="weeks">Weeks:</label>
+                <input type="number" class="form-control" id="weeks">
+            </div>
+        </div><br>
         <p class="lead">
-          <a class="btn btn-primary btn-lg" href="#" role="button">Calculate away!</a>
+          <a class="btn btn-primary btn-lg" href="#" role="button" onclick="return calcDates()">Calculate away!</a>
+          <label class="radio-inline"><input type="radio" name="optradio" id="weekRadio">Weeks</label>
+          <label class="radio-inline"><input type="radio" name="optradio" id="startRadio">Start Date</label>
+          <label class="radio-inline"><input type="radio" name="optradio" id="endRadio">End Date</label>
         </p>
+        <hr class="my-4">
+        <p class="h6">It was developed by Ricardo Iracheta for my own use as nobody seems to want to let me code anymore.</p>
     </div>
     </div>
 
+    <script>
+        function calcDates(){
+            var startInput = document.getElementById("start");
+            var endInput = document.getElementById("end");
+            var weeksInput = document.getElementById("weeks");
+            var startValidation = false;
+            var endValidation = false;
+            var weeksValidation = false;
+
+            if (startInput.value != "") {
+                startValidation = true;
+            }
+            else{
+                startValidation = false;
+            }
+
+
+            if (endInput.value != "") {
+                endValidation = true;
+            }
+            else{
+                endValidation = false;
+            }
+
+            if (weeksInput.value != "") {
+                weeksValidation = true;
+            }
+            else{
+                weeksValidation = false;
+            }
+
+            if ((startValidation == true && endValidation == true && weeksValidation == false)||document.getElementById("weekRadio").checked == true) {
+                document.getElementById("weekRadio").checked = true;
+                var start = new Date(startInput.value);
+                var end = new Date(endInput.value);
+                weeksInput.value = Math.round((end-start)/604800000);
+            }
+
+            if ((startValidation == true && endValidation == false && weeksValidation == true)||document.getElementById("endRadio").checked == true) {
+                document.getElementById("endRadio").checked = true;
+                var start = new Date(startInput.value);
+                var weeks = weeksInput.value;
+                var end = new Date();
+                end.setDate(start.getDate() + (weeks*7));
+                console.log(weeks*7);
+                endInput.value = end.toISOString().substring(0,10)
+            }
+
+            if ((startValidation == false && endValidation == true && weeksValidation == true)||document.getElementById("startRadio").checked == true) {
+                document.getElementById("startRadio").checked = true;
+                var end = new Date(endInput.value);
+                var weeks = weeksInput.value;
+                var start = new Date();
+                start.setDate(end.getDate() - (weeks*7));
+                startInput.value = start.toISOString().substring(0,10)
+            }
+        }
+    </script>
 </body>
 </html> 
