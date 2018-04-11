@@ -78,6 +78,9 @@
                 var start = new Date(startInput.value);
                 var end = new Date(endInput.value);
                 weeksInput.value = Math.round((end-start)/604800000);
+                $("#weeks").addClass("alert-info");
+                $("#start").removeClass("alert-info");
+                $("#end").removeClass("alert-info");
             }
 
             //Calculate End date
@@ -92,6 +95,9 @@
                 console.log(start.getDate()+(weeks*7));
                 console.log(end.toISOString().substring(0,10));
                 endInput.value = end.toISOString().substring(0,10);
+                $("#end").addClass("alert-info");
+                $("#start").removeClass("alert-info");
+                $("#weeks").removeClass("alert-info");
             }
 
             //Calculate Start date
@@ -104,6 +110,9 @@
                 console.log(-weeks*7);
                 console.log(end.toISOString().substring(0,10));
                 startInput.value = start.toISOString().substring(0,10);
+                $("#start").addClass("alert-info");
+                $("#end").removeClass("alert-info");
+                $("#weeks").removeClass("alert-info");
             }
         }
     </script>
