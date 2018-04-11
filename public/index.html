@@ -72,6 +72,7 @@
                 weeksValidation = false;
             }
 
+            //Calculate weeks number
             if ((startValidation == true && endValidation == true && weeksValidation == false)||document.getElementById("weekRadio").checked == true) {
                 document.getElementById("weekRadio").checked = true;
                 var start = new Date(startInput.value);
@@ -79,23 +80,30 @@
                 weeksInput.value = Math.round((end-start)/604800000);
             }
 
+            //Calculate End date
             if ((startValidation == true && endValidation == false && weeksValidation == true)||document.getElementById("endRadio").checked == true) {
                 document.getElementById("endRadio").checked = true;
                 var start = new Date(startInput.value);
                 var weeks = weeksInput.value;
-                var end = new Date();
+                var end = new Date(startInput.value);
                 end.setDate(start.getDate() + (weeks*7));
+                console.log(start.getDate());
                 console.log(weeks*7);
-                endInput.value = end.toISOString().substring(0,10)
+                console.log(start.getDate()+(weeks*7));
+                console.log(end.toISOString().substring(0,10));
+                endInput.value = end.toISOString().substring(0,10);
             }
 
+            //Calculate Start date
             if ((startValidation == false && endValidation == true && weeksValidation == true)||document.getElementById("startRadio").checked == true) {
                 document.getElementById("startRadio").checked = true;
                 var end = new Date(endInput.value);
                 var weeks = weeksInput.value;
-                var start = new Date();
+                var start = new Date(endInput.value);
                 start.setDate(end.getDate() - (weeks*7));
-                startInput.value = start.toISOString().substring(0,10)
+                console.log(-weeks*7);
+                console.log(end.toISOString().substring(0,10));
+                startInput.value = start.toISOString().substring(0,10);
             }
         }
     </script>
